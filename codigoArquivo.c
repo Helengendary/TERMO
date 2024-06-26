@@ -9,7 +9,7 @@ int main() {
     tituloTermo();
     char palavritas[50][10];
     int dificuldade = GuardarDificuldade();
-    int qtd_letras;
+    int qtd_letras = 0;
     char arquivo[20];
     PedirNome();
 

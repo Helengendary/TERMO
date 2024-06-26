@@ -6,9 +6,10 @@
 
 #ifndef BACKEND_H
 #define BACKEND_H
-#define BACK_VERDE "\x1b[42m"
-#define BACK_AMARELO "\x1b[40m"
-#define BACK_PRETO "\x1b[43m"
+#define BACK_VERDE "\x1b[32m"
+#define BACK_AMARELO "\x1b[33m"
+#define NEGRITO "\033[1m"
+#define VERMELHO "\x1b[31m"
 #define RESET "\x1b[0m"
 
 int tentativas = 0;
@@ -17,7 +18,7 @@ const char* getColor(char color) {
     switch (color) {
         case 'g': return BACK_VERDE;
         case 'y': return BACK_AMARELO;
-        case 'b': return BACK_PRETO;
+        case 'w': return VERMELHO;
         default: return RESET;
     }
 }
@@ -100,55 +101,80 @@ char *CompararPalavras(char *palavra_sorteada, char *resposta, int qtd_letras){
     return resultado; 
 }
 
-void ColocarMatriz(int qtd_letras, char* palavra_sorteada, const char* matriz_cores[6][qtd_letras], char matriz_letras[6][qtd_letras]){
+int cont = 0;
+
+void ColocarMatriz(int qtd_letras, char* palavra_sorteada, char **matriz_letras, char **matriz_cores){
     char* resposta = InputResposta(qtd_letras);
     char* result = CompararPalavras(palavra_sorteada, resposta, qtd_letras);
     
-    for (int j = 0; j < qtd_letras; j++) {
-        if(result[j] == '1'){
-            matriz_cores[tentativas][j] = getColor('g');
-        } else if(result[j] == '2'){
-            matriz_cores[tentativas][j] = getColor('y');
-        } else {
-            matriz_cores[tentativas][j] = getColor('b');
+    // printf("%d", qtd_letras);
+    
+    for(int i = cont; i == tentativas ; i++){
+        for(int j = 0; j < qtd_letras ; j++){
+
+            matriz_letras[i][j] = resposta[j];          
+            // printf("%c ", matriz_letras[i][j]);
         }
-        matriz_letras[tentativas][j] = resposta[j];
     }
 
-    tentativas++; // Incrementa tentativas depois de processar a resposta
+    for(int i = cont; i == tentativas ; i++){
+        for(int j = 0; j < qtd_letras ; j++){
+            if(result[j] == '1'){
+                matriz_cores[i][j] = 'g';
+            } else if(result[j] == '2'){
+                matriz_cores[i][j] = 'y';
+            } else if(result[j] == '0'){
+                matriz_cores[i][j] = 'w';
+            }
+        }
+        cont++;
+    }
 
-    free(resposta);
-    free(result);
-}
-
-void MostrarMatriz(int qtd_letras, const char* matriz_cores[6][qtd_letras], char matriz_letras[6][qtd_letras]){
-    for(int i = 0; i < tentativas; i++) {
-        for (int j = 0; j < qtd_letras; j++) {
-            printf("%s%c%s ", matriz_cores[i][j], matriz_letras[i][j], RESET);
+    for(int i = 0; i <= tentativas ; i++){
+        for(int j = 0; j < qtd_letras; j++){
+            printf("%s%s%c%s ", NEGRITO, getColor(matriz_cores[i][j]), matriz_letras[i][j], RESET);
+            // printf("%c ",matriz_letras[i][j]);
         }
         printf("\n");
     }
+
+    tentativas++;
+
 }
+
+// void MostrarMatriz(int qtd_letras, const char* matriz_cores[6][qtd_letras], char matriz_letras[6][qtd_letras]){
+//     for(int i = 0; i < tentativas; i++) {
+//         for (int j = 0; j < qtd_letras; j++) {
+//             printf("%s%c%s ", matriz_cores[i][j], matriz_letras[i][j], RESET);
+//         }
+//         printf("\n");
+//     }
+// }
 
 
 void jogada(char *arquivo, char palavritas[50][10], int qtd_letras){
     int vitoria = 0;
 
     char* palavra_sorteada = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
-    printf("Palavra sorteada: %s", palavra_sorteada);
-    char *matriz_letras[tentativas][qtd_letras];
-    char *matriz_cores[tentativas][qtd_letras];
+    printf("Palavra sorteada: %s\n", palavra_sorteada);
+    // [tentativas][qtd_letras];
+
+    char **matriz_cores = (char **)malloc((5*qtd_letras) * sizeof(char *));
+    char **matriz_letras = (char **)malloc((5*qtd_letras) * sizeof(char *));
 
     subtituloTermo();
 
     while (tentativas < 5 || vitoria != 1)
     {
 
-        ColocarMatriz(qtd_letras, palavra_sorteada, matriz_cores, matriz_letras);
+        ColocarMatriz(qtd_letras, palavra_sorteada, matriz_letras, matriz_cores);
 
-        MostrarMatriz(qtd_letras, matriz_cores, matriz_letras);
+        // MostrarMatriz(qtd_letras, matriz_cores, matriz_letras);
 
     }
+
+    free(matriz_cores);
+    free(matriz_letras);
     
 }
 

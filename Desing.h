@@ -11,8 +11,7 @@
 
 
 
-void tituloTermo() {
-
+void tituloTermo() { 
     printf(VERMELHO"	______________________\n");
     printf(VERMELHO"      /\\                      \\\n");
     printf(VERMELHO"     /  \\______         _______\\\n");
@@ -39,32 +38,32 @@ void subtituloTermo(){
 
 }
 
-void ImprimirMatriz(char matriz[5][5]) { 
+// void ImprimirMatriz(char matriz[5][5]) { 
         
-    for (int row = 0; row < 5; row++)
-    {
-        printf("\n");
-        for (int col = 0; col < 5; col++)
-        {
-            printf(" ___      ");
-        }  
-        printf("\n");
-        for (int col = 0; col < 5; col++)
-        {
-            printf("|   |     ");
-        }  
-        printf("\n");
-        for (int col = 0; col < 5; col++)
-        {
-            printf("|   |     ");
-        }  
-        printf("\n");
-        for (int col = 0; col < 5; col++)
-        {
-            printf("|___|     ");
-        }  
-        printf("\n");
-    }
-}
+//     for (int row = 0; row < 5; row++)
+//     {
+//         printf("\n");
+//         for (int col = 0; col < 5; col++)
+//         {
+//             printf(" ___      ");
+//         }  
+//         printf("\n");
+//         for (int col = 0; col < 5; col++)
+//         {
+//             printf("|   |     ");
+//         }  
+//         printf("\n");
+//         for (int col = 0; col < 5; col++)
+//         {
+//             printf("|   |     ");
+//         }  
+//         printf("\n");
+//         for (int col = 0; col < 5; col++)
+//         {
+//             printf("|___|     ");
+//         }  
+//         printf("\n");
+//     }
+// }
 
 #endif
