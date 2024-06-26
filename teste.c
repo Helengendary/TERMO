@@ -8,7 +8,7 @@ int main(void)
 {
 char palavritas[50][10];
 
-char *palavra[50] = SortearPalavra(LerArquivo("palavras/facil.txt", palavritas), palavritas);
+char* palavra = SortearPalavra(LerArquivo("palavras/facil.txt", palavritas), palavritas);
 
-printf("%s\n", *palavra);
+printf("%s\n", palavra);
 }

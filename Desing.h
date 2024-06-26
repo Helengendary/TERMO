@@ -8,12 +8,13 @@
 #define MAGENTA      "\x1b[35m"
 #define CIANO        "\x1b[36m"
 #define RESET        "\x1b[0m"
+#define NEGRITO      "\033[1m"
 
 
 
 void tituloTermo() {
 
-    printf(VERMELHO"	______________________\n");
+    printf("%s%s	______________________\n", VERMELHO, NEGRITO);
     printf(VERMELHO"      /\\                      \\\n");
     printf(VERMELHO"     /  \\______         _______\\\n");
     printf(VERMELHO"     \\  /      /\\      \\       /\n");
@@ -25,6 +26,12 @@ void tituloTermo() {
     printf(VERMELHO"                  \\   \\______\\ "VERDE"\\ \\____"MAGENTA"\\ \\  \\ \\  \\"AMARELO"\\ \\  \\\\/ \\  \\  "CIANO"\\\\_\\  \\\n");
     printf(VERMELHO"                   \\  /      /"VERDE"\\ \\______"MAGENTA"\\ \\__\\ \\__\\"AMARELO"\\ \\__\\ \\ \\__\\"CIANO"\\______/  \n");
     printf(VERMELHO"                    \\/______/ "VERDE" \\/______/"MAGENTA"\\/__/\\/__/ "AMARELO"\\/__/  \\/__/"CIANO"/_____/\n\n\n" RESET);
+
+    printf("%s%s T E R M O", AZUL, NEGRITO);
+    printf(RESET);
+    printf(AZUL"\nT E R M O\n");
+
+
 
 }
 
