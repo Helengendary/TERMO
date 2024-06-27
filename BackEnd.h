@@ -12,6 +12,7 @@
 #define VERMELHO "\x1b[31m"
 #define RESET "\x1b[0m"
 
+int vitoria = 0;
 int tentativas = 0;
 
 const char* getColor(char color) {
@@ -103,20 +104,8 @@ char *CompararPalavras(char *palavra_sorteada, char *resposta, int qtd_letras){
 
 int cont = 0;
 
-void ColocarMatriz(int qtd_letras, char* palavra_sorteada, char **matriz_letras, char **matriz_cores){
-    char* resposta = InputResposta(qtd_letras);
-    char* result = CompararPalavras(palavra_sorteada, resposta, qtd_letras);
+char **PreencherMatrizCores(char **matriz_cores, int qtd_letras, char *result){
     
-    // printf("%d", qtd_letras);
-    
-    for(int i = cont; i == tentativas ; i++){
-        for(int j = 0; j < qtd_letras ; j++){
-
-            matriz_letras[i][j] = resposta[j];          
-            // printf("%c ", matriz_letras[i][j]);
-        }
-    }
-
     for(int i = cont; i == tentativas ; i++){
         for(int j = 0; j < qtd_letras ; j++){
             if(result[j] == '1'){
@@ -130,52 +119,70 @@ void ColocarMatriz(int qtd_letras, char* palavra_sorteada, char **matriz_letras,
         cont++;
     }
 
+    return matriz_cores;
+}
+
+char **PreencherMatrizLetras(char **matriz_letras, int qtd_letras, char *resposta){
+    
+    for(int i = cont; i == tentativas ; i++){
+        for(int j = 0; j < qtd_letras ; j++){
+
+            matriz_letras[i][j] = resposta[j];          
+            // printf("%c ", matriz_letras[i][j]);
+        }
+    }
+
+    return matriz_letras;
+}
+
+void MostrarMatriz(int qtd_letras, char **matriz_letras, char **matriz_cores){
     for(int i = 0; i <= tentativas ; i++){
         for(int j = 0; j < qtd_letras; j++){
             printf("%s%s%c%s ", NEGRITO, getColor(matriz_cores[i][j]), matriz_letras[i][j], RESET);
-            // printf("%c ",matriz_letras[i][j]);
         }
         printf("\n");
     }
-
-    tentativas++;
-
 }
 
-// void MostrarMatriz(int qtd_letras, const char* matriz_cores[6][qtd_letras], char matriz_letras[6][qtd_letras]){
-//     for(int i = 0; i < tentativas; i++) {
-//         for (int j = 0; j < qtd_letras; j++) {
-//             printf("%s%c%s ", matriz_cores[i][j], matriz_letras[i][j], RESET);
-//         }
-//         printf("\n");
-//     }
-// }
+void ColocarMatriz(int qtd_letras, char* palavra_sorteada, char **matriz_letras, char **matriz_cores){
+    char* resposta = InputResposta(qtd_letras);
+    char* result = CompararPalavras(palavra_sorteada, resposta, qtd_letras);
 
+    matriz_letras = PreencherMatrizLetras(matriz_letras, qtd_letras, resposta);
+    matriz_cores = PreencherMatrizCores(matriz_cores, qtd_letras, result);
+
+    MostrarMatriz(qtd_letras, matriz_letras, matriz_cores);
+
+    tentativas++;
+}
 
 void jogada(char *arquivo, char palavritas[50][10], int qtd_letras){
-    int vitoria = 0;
 
     char* palavra_sorteada = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
     printf("Palavra sorteada: %s\n", palavra_sorteada);
-    // [tentativas][qtd_letras];
 
-    char **matriz_cores = (char **)malloc((5*qtd_letras) * sizeof(char *));
-    char **matriz_letras = (char **)malloc((5*qtd_letras) * sizeof(char *));
+    char **matriz_cores = (char **)malloc(5 * sizeof(char *));
+    for (int i = 0; i < 5; i++) {
+        matriz_cores[i] = (char *)malloc(qtd_letras * sizeof(char));
+    }
+
+    char **matriz_letras = (char **)malloc(5 * sizeof(char *));
+    for (int i = 0; i < 5; i++) {
+        matriz_letras[i] = (char *)malloc(qtd_letras * sizeof(char));
+    }
 
     subtituloTermo();
 
     while (tentativas < 5 || vitoria != 1)
     {
-
         ColocarMatriz(qtd_letras, palavra_sorteada, matriz_letras, matriz_cores);
-
-        // MostrarMatriz(qtd_letras, matriz_cores, matriz_letras);
 
     }
 
     free(matriz_cores);
     free(matriz_letras);
-    
+
 }
+    
 
 #endif 

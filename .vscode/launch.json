@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Aluno/TERMO",
-      "program": "c:/Users/Aluno/TERMO/build/Debug/outDebug",
+      "cwd": "c:/Users/Aluno/Desktop/TERMO",
+      "program": "c:/Users/Aluno/Desktop/TERMO/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

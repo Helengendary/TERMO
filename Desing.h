@@ -19,7 +19,7 @@ void tituloTermo() {
     printf(VERMELHO"      \\/______/  \\      \\_____/\n");
     printf(VERMELHO"              \\   \\      \\   "VERDE"_______  "MAGENTA"________  "AMARELO"___    ___  "CIANO"_______\n");
     printf(VERMELHO"               \\   \\      \\"VERDE"/\\   ____/"MAGENTA"\\   ___  \\"AMARELO"/   \\  /\\  \\"CIANO"/  ___  \\\n");
-    printf(VERMELHO"                \\   \\      \\ "VERDE"\\ \\____"MAGENTA"\\ \\  \\  \\ "AMARELO" \\    \\/ /   \\  "CIANO"\\\\ \\  \\\n");
+    printf(VERMELHO"                \\   \\      \\ "VERDE"\\ \\____"MAGENTA"\\ \\  \\  \\  \\"AMARELO"    \\/ /   \\  "CIANO"\\\\ \\  \\\n");
     printf(VERMELHO"                 \\   \\      \\ "VERDE"\\  ____"MAGENTA"\\ \\  \\_/  /"AMARELO"\\ \\   _     \\  "CIANO"\\\\ \\  \\\n");
     printf(VERMELHO"                  \\   \\______\\ "VERDE"\\ \\____"MAGENTA"\\ \\  \\ \\  \\"AMARELO"\\ \\  \\\\/ \\  \\  "CIANO"\\\\_\\  \\\n");
     printf(VERMELHO"                   \\  /      /"VERDE"\\ \\______"MAGENTA"\\ \\__\\ \\__\\"AMARELO"\\ \\__\\ \\ \\__\\"CIANO"\\______/  \n");
