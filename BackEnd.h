@@ -69,6 +69,40 @@ char* InputResposta(int qtd_letras){
 
 char *CompararPalavras(char *palavra_sorteada, char *resposta, int qtd_letras){
     char *resultado = (char *)malloc((qtd_letras + 1) * sizeof(char));
+    int *letrasRepetidas = (int *)malloc((qtd_letras + 1) * sizeof(int));
+    
+    for (int i = 0; i < qtd_letras; i++)
+    {
+        int quantidadeLetras = 0;
+        int nottem = 1;
+
+        for (int j = 0; j <= i+1; j++)
+        {
+            if (strcmp(&resultado[i], &resultado[j]) == 0) {
+                nottem = 0;
+            }
+        }
+
+        int h = i;
+        while (nottem == 1)
+        {
+            if (h == qtd_letras){
+                nottem = 0;
+            }
+
+            if (strcmp(&resultado[i+1], &resultado[h]) == 0) {
+                quantidadeLetras++;
+            }
+            h++;
+        }
+        
+        letrasRepetidas[i] = quantidadeLetras;
+    }
+
+    for(int j = 0; j < qtd_letras ; j++){       
+        printf("%d ", letrasRepetidas[j]);
+    }
+
     char lugar_certo = '1';
     char nao_tem = '0';
     char lugar_errado = '2';
@@ -109,6 +143,7 @@ char **PreencherMatrizCores(char **matriz_cores, int qtd_letras, char *result){
 
     return matriz_cores;
 }
+
 char **PreencherMatrizLetras(char **matriz_letras, int qtd_letras, char *resposta){
     
     for(int i = cont; i == tentativas ; i++){
@@ -177,5 +212,4 @@ void jogada(char *arquivo, char palavritas[50][10], int qtd_letras){
     free(matriz_letras);
 }
     
-
 #endif 
