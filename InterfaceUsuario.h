@@ -23,7 +23,7 @@ void PedirNome(){
 int GuardarDificuldade(){
     int num_dificuldade = 0;
 
-    printf("Escolha o nivel que deseja jogar\n1- Facil\n2- Medio\n3- Dificil\n > ");
+    printf("Escolha o nivel que deseja jogar\n1- Termo\n2- Dueto\n > ");
     scanf("%d", &num_dificuldade);
 
     return num_dificuldade;

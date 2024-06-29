@@ -47,8 +47,8 @@ int LerArquivo(char nomeArq[50], char palavritas[50][10]) {
 }
 
 // Função que sorteia uma palavra e a retorna como string
-char* SortearPalavra(int indicePalavras, char palavritas[50][10]) {
-    srand(time(NULL));
+char* SortearPalavra(int indicePalavras, char palavritas[50][10])
+{
     int num_sorteado = rand() % indicePalavras;
     char* palavra_sorteada = (char*)malloc(10 * sizeof(char));
 
@@ -109,20 +109,109 @@ char **PreencherMatrizCores(char **matriz_cores, int qtd_letras, char *result){
 
     return matriz_cores;
 }
+
 char **PreencherMatrizLetras(char **matriz_letras, int qtd_letras, char *resposta){
     
     for(int i = cont; i == tentativas ; i++){
         for(int j = 0; j < qtd_letras ; j++){
-
-            matriz_letras[i][j] = resposta[j];          
-            // printf("%c ", matriz_letras[i][j]);
+            matriz_letras[i][j] = resposta[j];
         }
     }
 
     return matriz_letras;
 }
 
-int ColocarMatriz(int qtd_letras, char* palavra_sorteada, char **matriz_letras, char **matriz_cores){
+int cont2 = 0;
+
+char **PreencherMatrizCores2(char **matriz_cores, int qtd_letras, char *result){
+    
+    for(int i = cont2; i == tentativas ; i++){
+        for(int j = 0; j < qtd_letras ; j++){
+            if(result[j] == '1'){
+                matriz_cores[i][j] = 'g';
+            } else if(result[j] == '2'){
+                matriz_cores[i][j] = 'y';
+            } else if(result[j] == '0'){
+                matriz_cores[i][j] = 'w';
+            }
+        }
+        cont2++;
+    }
+
+    return matriz_cores;
+}
+
+
+char **PreencherMatrizLetras2(char **matriz_letras, int qtd_letras, char *resposta){
+    
+    for(int i = cont2; i == tentativas ; i++){
+        for(int j = 0; j < qtd_letras ; j++){
+            matriz_letras[i][j] = resposta[j];
+        }
+    }
+
+    return matriz_letras;
+}
+
+char *PreencherCoresAlfabeto(char *cores_alfabeto,char *alfabeto, char *result, char *resposta, int qtd_letras){
+    char caractere;
+
+    for(int i = 0; i < qtd_letras; i++){
+
+        caractere = resposta[i];
+
+        for(int j = 0; j <= 26; j++){
+            if(result[i] == '1'){
+                if((caractere == alfabeto[j]) && (cores_alfabeto[j] == 'x')){
+                    cores_alfabeto[j] = 'g';
+                }
+            }else if(result[i] == '2'){
+                if((caractere == alfabeto[j]) && (cores_alfabeto[j] == 'x')){
+                    cores_alfabeto[j] = 'y';
+                }
+            }else if(result[i] == '0'){
+                if((caractere == alfabeto[j]) && (cores_alfabeto[j] == 'x')){
+                    cores_alfabeto[j] = 'w';
+                }
+            }
+        }
+
+        
+    }
+
+    return cores_alfabeto;
+}
+
+char *PreencherCoresAlfabetoDueto(char *cores_alfabeto,char *alfabeto, char *result1, char *resposta, char *result2, int qtd_letras){
+    char caractere;
+
+    for(int i = 0; i < qtd_letras; i++){
+
+        caractere = resposta[i];
+
+        for(int j = 0; j <= 26; j++){
+            if((result1[i] == '1') || (result2[i] == '1')){
+                if((caractere == alfabeto[j]) && (cores_alfabeto[j] == 'x')){
+                    cores_alfabeto[j] = 'g';
+                }
+            }else if((result1[i] == '2') || (result2[i] == '2')){
+                if((caractere == alfabeto[j]) && (cores_alfabeto[j] == 'x')){
+                    cores_alfabeto[j] = 'y';
+                }
+            }else if((result1[i] == '0') || (result2[i] == '0')){
+                if((caractere == alfabeto[j]) && (cores_alfabeto[j] == 'x')){
+                    cores_alfabeto[j] = 'w';
+                }
+            }
+        }
+
+        
+    }
+
+    return cores_alfabeto;
+}
+
+int ColocarMatrizTermo(int qtd_letras, char* palavra_sorteada, char **matriz_letras, char **matriz_cores, char *alfabeto, char *cores_alfabeto){
     char* resposta = InputResposta(qtd_letras);
     char* result = CompararPalavras(palavra_sorteada, resposta, qtd_letras);
 
@@ -136,10 +225,11 @@ int ColocarMatriz(int qtd_letras, char* palavra_sorteada, char **matriz_letras, 
     matriz_letras = PreencherMatrizLetras(matriz_letras, qtd_letras, resposta);
     matriz_cores = PreencherMatrizCores(matriz_cores, qtd_letras, result);
 
+    cores_alfabeto = PreencherCoresAlfabeto(cores_alfabeto, alfabeto, result, resposta, qtd_letras);
 
     subtituloTermo();
-    ImprimirMatriz(matriz_letras, qtd_letras, tentativas, matriz_cores);
-    Teclado();
+    ImprimirMatrizTermo(matriz_letras, qtd_letras, tentativas, matriz_cores);
+    Teclado(alfabeto, cores_alfabeto);
 
     if(contador == qtd_letras){
         return 1;
@@ -150,10 +240,58 @@ int ColocarMatriz(int qtd_letras, char* palavra_sorteada, char **matriz_letras, 
     return 0;
 }
 
-void jogada(char *arquivo, char palavritas[50][10], int qtd_letras){
+int ColocarMatrizDueto(int qtd_letras, char* palavra_sorteada1, char **matriz_letras1, char **matriz_cores1, char* palavra_sorteada2, char **matriz_letras2, char **matriz_cores2, char *alfabeto, char *cores_alfabeto){
+    
+    char* resposta = InputResposta(qtd_letras);
+    char* result1 = CompararPalavras(palavra_sorteada1, resposta, qtd_letras);
+    char* result2 = CompararPalavras(palavra_sorteada2, resposta, qtd_letras);
+
+    int contador1 = 0;
+    int contador2 = 0;
+    int vit1 = 0;
+    int vit2 = 0;
+
+    for(int i = 0; i < qtd_letras; i++){
+        if(result1[i] == '1'){
+            contador1++;
+        }
+        if(result2[i] == '1'){
+            contador2++;
+        }
+    }
+
+    matriz_letras1 = PreencherMatrizLetras(matriz_letras1, qtd_letras, resposta);
+    matriz_cores1 = PreencherMatrizCores(matriz_cores1, qtd_letras, result1);
+
+    matriz_letras2 = PreencherMatrizLetras2(matriz_letras2, qtd_letras, resposta);
+    matriz_cores2 = PreencherMatrizCores2(matriz_cores2, qtd_letras, result2);
+
+    cores_alfabeto = PreencherCoresAlfabetoDueto(cores_alfabeto, alfabeto, result1, resposta, result2, qtd_letras);
+
+    subtituloDueto();
+    ImprimirMatrizDueto(matriz_letras1, matriz_letras2, qtd_letras, tentativas, matriz_cores1, matriz_cores2, vit1, vit2);
+    Teclado(alfabeto, cores_alfabeto);
+
+    if(contador1 == qtd_letras){
+        vit1 = 1;
+        return 1;
+    }
+
+    if(contador2 == qtd_letras){
+        vit2 = 1;
+        return 1;
+    }
+
+    tentativas++;
+
+    return 0;
+}
+
+void jogadaTermo(char *arquivo, char palavritas[50][10], int qtd_letras){
+    srand(time(NULL));
 
     char* palavra_sorteada = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
-    printf("Palavra sorteada: %s\n", palavra_sorteada);
+    // printf("Palavra sorteada: %s\n", palavra_sorteada);
 
     char **matriz_cores = (char **)malloc(5 * sizeof(char *));
     for (int i = 0; i < 5; i++) {
@@ -165,16 +303,67 @@ void jogada(char *arquivo, char palavritas[50][10], int qtd_letras){
         matriz_letras[i] = (char *)malloc(qtd_letras * sizeof(char));
     }
 
+    char alfabeto[] = {'q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m'};
+    char cores_alfabeto[] = {'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'};
+
     subtituloTermo();
 
     while (tentativas < 5 && vitoria != 1)
     {
-        vitoria = ColocarMatriz(qtd_letras, palavra_sorteada, matriz_letras, matriz_cores);
-
+        vitoria = ColocarMatrizTermo(qtd_letras, palavra_sorteada, matriz_letras, matriz_cores, alfabeto, cores_alfabeto);
     }
 
     free(matriz_cores);
     free(matriz_letras);
+}
+
+void jogadaDueto(char *arquivo, char palavritas[50][10], int qtd_letras){
+    int soma = 0;
+    srand(time(NULL));
+
+    char* palavra_sorteada1 = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
+    char* palavra_sorteada2 = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
+
+    printf("Palavra sorteada 1: %s\n", palavra_sorteada1);
+    printf("Palavra sorteada 2: %s\n", palavra_sorteada2);
+
+    //   - MATRIZ 1
+    char **matriz_cores1 = (char **)malloc(5 * sizeof(char *));
+    for (int i = 0; i < 5; i++) {
+        matriz_cores1[i] = (char *)malloc(qtd_letras * sizeof(char));
+    }
+
+    char **matriz_letras1 = (char **)malloc(5 * sizeof(char *));
+    for (int i = 0; i < 5; i++) {
+        matriz_letras1[i] = (char *)malloc(qtd_letras * sizeof(char));
+    }
+
+    //   - MATRIZ 2
+    char **matriz_cores2 = (char **)malloc(5 * sizeof(char *));
+    for (int i = 0; i < 5; i++) {
+        matriz_cores2[i] = (char *)malloc(qtd_letras * sizeof(char));
+    }
+
+    char **matriz_letras2 = (char **)malloc(5 * sizeof(char *));
+    for (int i = 0; i < 5; i++) {
+        matriz_letras2[i] = (char *)malloc(qtd_letras * sizeof(char));
+    }
+
+    char alfabeto[] = {'q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m'};
+    char cores_alfabeto[] = {'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'};
+
+    subtituloDueto();
+
+    while (tentativas < 5 && vitoria != 2)
+    {
+        soma = ColocarMatrizDueto(qtd_letras, palavra_sorteada1, matriz_letras1, matriz_cores1, palavra_sorteada2, matriz_letras2, matriz_cores2, alfabeto, cores_alfabeto);
+        vitoria += soma;
+    }
+    
+    free(matriz_cores1);
+    free(matriz_letras1);
+    free(matriz_cores2);
+    free(matriz_letras2);
 }
     
 

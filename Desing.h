@@ -21,6 +21,7 @@ const char* getColor(char color) {
         case 'g': return BACK_VERDE;
         case 'y': return BACK_AMARELO;
         case 'w': return VERMELHO;
+        case 'x': return RESET;
         default: return RESET;
     }
 }
@@ -53,8 +54,13 @@ void subtituloTermo(){
 
 }
 
-void Teclado(){
-    char *alfabeto[30] = {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M"};
+void subtituloDueto(){
+
+    printf(" DUETO \n");
+
+}
+
+void Teclado(char *alfabeto, char *cores_alfabeto){
 
     printf("\n");
     for (int i = 0; i < 26; i++)
@@ -66,13 +72,13 @@ void Teclado(){
             printf("\n");
             printf("      ");
         }
-        printf("%s   ", alfabeto[i]);
+        printf("%s%c%s   ",getColor(cores_alfabeto[i]), alfabeto[i], RESET);
     }
     printf("\n");
     
 }
 
-void ImprimirMatriz(char **matriz, int qtd_letras, int tentativa, char **matriz_cores) { 
+void ImprimirMatrizTermo(char **matriz, int qtd_letras, int tentativa, char **matriz_cores) { 
 
     for (int row = 0; row < tentativa+1; row++)
     {
@@ -97,8 +103,61 @@ void ImprimirMatriz(char **matriz, int qtd_letras, int tentativa, char **matriz_
             printf("%s%s|___|     %s", NEGRITO, getColor(matriz_cores[row][col]), RESET);
         }  
         printf("\n");
-    }
-      
+    }     
+}
+
+void ImprimirMatrizDueto(char **matriz1,char **matriz2, int qtd_letras, int tentativa, char **matriz_cores1, char **matriz_cores2, int vt1, int vt2) { 
+
+    for (int row = 0; row < tentativa+1; row++)
+    {
+        printf("\n");
+        for (int col = 0; col < qtd_letras; col++)
+        {
+            printf("%s%s ___      %s", NEGRITO, getColor(matriz_cores1[row][col]), RESET);
+        }  
+        printf("           ");
+        for (int col = 0; col < qtd_letras; col++)
+        {
+            printf("%s%s ___      %s", NEGRITO, getColor(matriz_cores2[row][col]), RESET);
+        } 
+
+        printf("\n");
+        for (int col = 0; col < qtd_letras; col++)
+        {
+            printf("%s%s|   |     %s", NEGRITO, getColor(matriz_cores1[row][col]), RESET);
+        }  
+        printf("           ");
+        for (int col = 0; col < qtd_letras; col++)
+        {
+            printf("%s%s|   |     %s", NEGRITO, getColor(matriz_cores2[row][col]), RESET);
+        } 
+
+        printf("\n");
+        for (int col = 0; col < qtd_letras; col++)
+        {
+            printf("%s%s| %c |     %s", NEGRITO, getColor(matriz_cores1[row][col]), matriz1[row][col], RESET);
+        }
+        printf("           ");
+        for (int col = 0; col < qtd_letras; col++)
+        {
+            printf("%s%s| %c |     %s", NEGRITO, getColor(matriz_cores2[row][col]), matriz2[row][col], RESET);
+        } 
+
+        printf("\n");
+        for (int col = 0; col < qtd_letras; col++)
+        {
+            printf("%s%s|___|     %s", NEGRITO, getColor(matriz_cores1[row][col]), RESET);
+        } 
+        printf("           ");
+        for (int col = 0; col < qtd_letras; col++)
+        {
+            printf("%s%s|___|     %s", NEGRITO, getColor(matriz_cores2[row][col]), RESET);
+        }  
+
+        printf("           ");
+        
+        printf("\n");
+    }     
 }
 
 #endif
