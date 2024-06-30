@@ -7,11 +7,12 @@
 
 int main() {
     tituloTermo();
-    char palavritas[50][10];
+    char palavritas[1000][6];
     int dificuldade = GuardarDificuldade();
     int qtd_letras = 5;
     char arquivo[20];
     PedirNome();
+
     strcpy(arquivo, "palavras/facil.txt");
 
     switch (dificuldade)

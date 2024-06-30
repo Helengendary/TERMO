@@ -6,16 +6,19 @@
 #include "Dados.h"
 #include "InterfaceUsuario.h"
 #include <conio.h>
+#include <ctype.h>
+
 
 #ifndef BACKEND_H
 #define BACKEND_H
+#define MAX_PALAVRA 100 // Tamanho máximo de uma palavra
 
 int vitoria = 0;
 int tentativas = 0;
 int vit1 = 0;
 int vit2 = 0;
 
-int LerArquivo(char nomeArq[50], char palavritas[50][10]) {
+int LerArquivo(char nomeArq[50], char palavritas[1000][6]) {
     FILE *arquivo;
     char c;
     int indicePalavras = 0;
@@ -51,7 +54,7 @@ int LerArquivo(char nomeArq[50], char palavritas[50][10]) {
 }
 
 // Função que sorteia uma palavra e a retorna como string
-char* SortearPalavra(int indicePalavras, char palavritas[50][10])
+char* SortearPalavra(int indicePalavras, char palavritas[1000][6])
 {
     int num_sorteado = rand() % indicePalavras;
     char* palavra_sorteada = (char*)malloc(10 * sizeof(char));
@@ -61,13 +64,54 @@ char* SortearPalavra(int indicePalavras, char palavritas[50][10])
     return palavra_sorteada;
 }
 
-char* InputResposta(int qtd_letras){
-    char* resposta = (char*)malloc(qtd_letras * sizeof(char)); 
+int palavraValida(const char* word) {
+    if (strlen(word) != 5) {
+        return 0;
+    }
+    for (int i = 0; i < 5; i++) {
+        if (!isalpha(word[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
 
-    printf("\n : ");
-    scanf("%s", resposta);
+int palavraExiste(const char* word) {
+    FILE *file = fopen("palavrasPossiveis.txt", "r");
 
-    system("clear");
+    char buffer[MAX_PALAVRA];
+    while (fscanf(file, "%[^,],", buffer) != EOF) {
+        if (strcmp(word, buffer) == 0) {
+            fclose(file);
+            return 1;
+        }
+    }
+
+    fclose(file);
+    return 0;
+}
+
+char* InputResposta(int qtd_letras) {
+    char* resposta = (char*)malloc((qtd_letras + 1) * sizeof(char)); // +1 para o caractere nulo
+
+    if (resposta == NULL) {
+        printf("Erro ao alocar memória\n");
+        exit(1);
+    }
+
+    while (1) {
+        printf("\nDigite uma palavra de %d letras: ", qtd_letras);
+        scanf("%s", resposta);
+
+        if (!palavraValida(resposta)) {
+            printf("Entrada inválida. Certifique-se de que a palavra tem %d letras e contém apenas letras.\n", qtd_letras);
+        } else if (!palavraExiste(resposta)) {
+            printf("Palavra não encontrada na lista de palavras possíveis.\n");
+        } else {
+            break;
+        }
+    }
+
     return resposta;
 }
 
@@ -321,7 +365,7 @@ int ColocarMatrizDueto(int qtd_letras, char* palavra_sorteada1, char **matriz_le
 
 }
 
-int jogadaTermo(char *arquivo, char palavritas[50][10], int qtd_letras){
+int jogadaTermo(char *arquivo, char palavritas[1000][6], int qtd_letras){
     srand(time(NULL));
 
     char* palavra_sorteada = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
@@ -357,7 +401,7 @@ int jogadaTermo(char *arquivo, char palavritas[50][10], int qtd_letras){
     free(matriz_letras);
 }
 
-int jogadaDueto(char *arquivo, char palavritas[50][10], int qtd_letras){
+int jogadaDueto(char *arquivo, char palavritas[1000][6], int qtd_letras){
     int soma = 0;
     srand(time(NULL));
 
@@ -412,7 +456,7 @@ int jogadaDueto(char *arquivo, char palavritas[50][10], int qtd_letras){
     free(matriz_letras2);
 }
 
-void jogada(int choice, char *arquivo, char palavritas[50][10], int qtd_letras){
+void jogada(int choice, char *arquivo, char palavritas[1000][6], int qtd_letras){
     int v = 0;
 
     if(choice == 1){
