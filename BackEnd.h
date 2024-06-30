@@ -10,6 +10,8 @@
 
 int vitoria = 0;
 int tentativas = 0;
+int vit1 = 0;
+int vit2 = 0;
 
 int LerArquivo(char nomeArq[50], char palavritas[50][10]) {
     FILE *arquivo;
@@ -90,63 +92,97 @@ char *CompararPalavras(char *palavra_sorteada, char *resposta, int qtd_letras){
     return resultado; 
 }
 
-int cont = 0;
 
-char **PreencherMatrizCores(char **matriz_cores, int qtd_letras, char *result){
-    
-    for(int i = cont; i == tentativas ; i++){
-        for(int j = 0; j < qtd_letras ; j++){
-            if(result[j] == '1'){
-                matriz_cores[i][j] = 'g';
-            } else if(result[j] == '2'){
-                matriz_cores[i][j] = 'y';
-            } else if(result[j] == '0'){
-                matriz_cores[i][j] = 'w';
+int cont2 = 0;
+
+char **PreencherMatrizCores2(char **matriz_cores, int qtd_letras, char *result, int vit2){
+    if(vit2 == 0){
+        for(int i = cont2; i == tentativas ; i++){
+            for(int j = 0; j < qtd_letras ; j++){
+                if(result[j] == '1'){
+                    matriz_cores[i][j] = 'g';
+                } else if(result[j] == '2'){
+                    matriz_cores[i][j] = 'y';
+                } else if(result[j] == '0'){
+                    matriz_cores[i][j] = 'w';
+                }
             }
+            cont2++;
         }
-        cont++;
+    }else{
+        for(int i = cont2; i == tentativas ; i++){
+            for(int j = 0; j < qtd_letras ; j++){
+                matriz_cores[i][j] = 'x';
+            }
+            cont2++;
+        }
     }
 
     return matriz_cores;
 }
 
-char **PreencherMatrizLetras(char **matriz_letras, int qtd_letras, char *resposta){
-    
-    for(int i = cont; i == tentativas ; i++){
-        for(int j = 0; j < qtd_letras ; j++){
-            matriz_letras[i][j] = resposta[j];
+
+char **PreencherMatrizLetras2(char **matriz_letras, int qtd_letras, char *resposta, int vit2){
+    if(vit2 == 0){
+        for(int i = cont2; i == tentativas ; i++){
+            for(int j = 0; j < qtd_letras ; j++){
+                matriz_letras[i][j] = resposta[j];
+            }
+        }
+    }else{
+        for(int i = cont2; i == tentativas ; i++){
+            for(int j = 0; j < qtd_letras ; j++){
+                matriz_letras[i][j] = ' ';
+            }
         }
     }
 
     return matriz_letras;
 }
 
-int cont2 = 0;
 
-char **PreencherMatrizCores2(char **matriz_cores, int qtd_letras, char *result){
+int cont = 0;
+
+char **PreencherMatrizCores(char **matriz_cores, int qtd_letras, char *result, int vit1){
     
-    for(int i = cont2; i == tentativas ; i++){
-        for(int j = 0; j < qtd_letras ; j++){
-            if(result[j] == '1'){
-                matriz_cores[i][j] = 'g';
-            } else if(result[j] == '2'){
-                matriz_cores[i][j] = 'y';
-            } else if(result[j] == '0'){
-                matriz_cores[i][j] = 'w';
+    if(vit1 == 0){
+        for(int i = cont; i == tentativas ; i++){
+            for(int j = 0; j < qtd_letras ; j++){
+                if(result[j] == '1'){
+                    matriz_cores[i][j] = 'g';
+                } else if(result[j] == '2'){
+                    matriz_cores[i][j] = 'y';
+                } else if(result[j] == '0'){
+                    matriz_cores[i][j] = 'w';
+                }
             }
+            cont++;
         }
-        cont2++;
+    }else{
+        for(int i = cont; i == tentativas ; i++){
+            for(int j = 0; j < qtd_letras ; j++){
+                matriz_cores[i][j] = 'x';
+            }
+            cont++;
+        }
     }
 
     return matriz_cores;
 }
 
-
-char **PreencherMatrizLetras2(char **matriz_letras, int qtd_letras, char *resposta){
+char **PreencherMatrizLetras(char **matriz_letras, int qtd_letras, char *resposta, int vit1){
     
-    for(int i = cont2; i == tentativas ; i++){
-        for(int j = 0; j < qtd_letras ; j++){
-            matriz_letras[i][j] = resposta[j];
+    if(vit1 == 0){
+        for(int i = cont; i == tentativas ; i++){
+            for(int j = 0; j < qtd_letras ; j++){
+                matriz_letras[i][j] = resposta[j];
+            }
+        }
+    }else{
+        for(int i = cont; i == tentativas ; i++){
+            for(int j = 0; j < qtd_letras ; j++){
+                matriz_letras[i][j] = ' ';
+            }
         }
     }
 
@@ -175,8 +211,6 @@ char *PreencherCoresAlfabeto(char *cores_alfabeto,char *alfabeto, char *result, 
                 }
             }
         }
-
-        
     }
 
     return cores_alfabeto;
@@ -211,6 +245,7 @@ char *PreencherCoresAlfabetoDueto(char *cores_alfabeto,char *alfabeto, char *res
     return cores_alfabeto;
 }
 
+
 int ColocarMatrizTermo(int qtd_letras, char* palavra_sorteada, char **matriz_letras, char **matriz_cores, char *alfabeto, char *cores_alfabeto){
     char* resposta = InputResposta(qtd_letras);
     char* result = CompararPalavras(palavra_sorteada, resposta, qtd_letras);
@@ -222,8 +257,8 @@ int ColocarMatrizTermo(int qtd_letras, char* palavra_sorteada, char **matriz_let
         }
     }
 
-    matriz_letras = PreencherMatrizLetras(matriz_letras, qtd_letras, resposta);
-    matriz_cores = PreencherMatrizCores(matriz_cores, qtd_letras, result);
+    matriz_letras = PreencherMatrizLetras(matriz_letras, qtd_letras, resposta, vit1);
+    matriz_cores = PreencherMatrizCores(matriz_cores, qtd_letras, result, vit1);
 
     cores_alfabeto = PreencherCoresAlfabeto(cores_alfabeto, alfabeto, result, resposta, qtd_letras);
 
@@ -248,8 +283,6 @@ int ColocarMatrizDueto(int qtd_letras, char* palavra_sorteada1, char **matriz_le
 
     int contador1 = 0;
     int contador2 = 0;
-    int vit1 = 0;
-    int vit2 = 0;
 
     for(int i = 0; i < qtd_letras; i++){
         if(result1[i] == '1'){
@@ -260,16 +293,16 @@ int ColocarMatrizDueto(int qtd_letras, char* palavra_sorteada1, char **matriz_le
         }
     }
 
-    matriz_letras1 = PreencherMatrizLetras(matriz_letras1, qtd_letras, resposta);
-    matriz_cores1 = PreencherMatrizCores(matriz_cores1, qtd_letras, result1);
+    matriz_letras1 = PreencherMatrizLetras(matriz_letras1, qtd_letras, resposta, vit1);
+    matriz_cores1 = PreencherMatrizCores(matriz_cores1, qtd_letras, result1, vit1);
 
-    matriz_letras2 = PreencherMatrizLetras2(matriz_letras2, qtd_letras, resposta);
-    matriz_cores2 = PreencherMatrizCores2(matriz_cores2, qtd_letras, result2);
+    matriz_letras2 = PreencherMatrizLetras2(matriz_letras2, qtd_letras, resposta, vit2);
+    matriz_cores2 = PreencherMatrizCores2(matriz_cores2, qtd_letras, result2, vit2);
 
     cores_alfabeto = PreencherCoresAlfabetoDueto(cores_alfabeto, alfabeto, result1, resposta, result2, qtd_letras);
 
     subtituloDueto();
-    ImprimirMatrizDueto(matriz_letras1, matriz_letras2, qtd_letras, tentativas, matriz_cores1, matriz_cores2, vit1, vit2);
+    ImprimirMatrizDueto(matriz_letras1, matriz_letras2, qtd_letras, tentativas, matriz_cores1, matriz_cores2);
     Teclado(alfabeto, cores_alfabeto);
 
     if(contador1 == qtd_letras){

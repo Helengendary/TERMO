@@ -56,7 +56,12 @@ void subtituloTermo(){
 
 void subtituloDueto(){
 
-    printf(" DUETO \n");
+    printf(" _____   _   _  ____  _____  ___\n");
+    printf("|  _  \\ | | | ||  __||_   _|/ _ \\\n");
+    printf("| | \\  || | | || |_    | | | | | |\n");
+    printf("| |  | || | | ||  _|   | | | | | |\n");
+    printf("| |_/  || |_| || |__   | | | |_| |\n");
+    printf("|_____/  \\___/ |____|  |_|  \\___/\n");
 
 }
 
@@ -106,9 +111,10 @@ void ImprimirMatrizTermo(char **matriz, int qtd_letras, int tentativa, char **ma
     }     
 }
 
-void ImprimirMatrizDueto(char **matriz1,char **matriz2, int qtd_letras, int tentativa, char **matriz_cores1, char **matriz_cores2, int vt1, int vt2) { 
+void ImprimirMatrizDueto(char **matriz1,char **matriz2, int qtd_letras, int tentativa, char **matriz_cores1, char **matriz_cores2)
+{ 
 
-    for (int row = 0; row < tentativa+1; row++)
+for (int row = 0; row < tentativa+1; row++)
     {
         printf("\n");
         for (int col = 0; col < qtd_letras; col++)
@@ -120,7 +126,6 @@ void ImprimirMatrizDueto(char **matriz1,char **matriz2, int qtd_letras, int tent
         {
             printf("%s%s ___      %s", NEGRITO, getColor(matriz_cores2[row][col]), RESET);
         } 
-
         printf("\n");
         for (int col = 0; col < qtd_letras; col++)
         {
@@ -131,7 +136,6 @@ void ImprimirMatrizDueto(char **matriz1,char **matriz2, int qtd_letras, int tent
         {
             printf("%s%s|   |     %s", NEGRITO, getColor(matriz_cores2[row][col]), RESET);
         } 
-
         printf("\n");
         for (int col = 0; col < qtd_letras; col++)
         {
@@ -142,7 +146,6 @@ void ImprimirMatrizDueto(char **matriz1,char **matriz2, int qtd_letras, int tent
         {
             printf("%s%s| %c |     %s", NEGRITO, getColor(matriz_cores2[row][col]), matriz2[row][col], RESET);
         } 
-
         printf("\n");
         for (int col = 0; col < qtd_letras; col++)
         {
@@ -153,11 +156,11 @@ void ImprimirMatrizDueto(char **matriz1,char **matriz2, int qtd_letras, int tent
         {
             printf("%s%s|___|     %s", NEGRITO, getColor(matriz_cores2[row][col]), RESET);
         }  
-
         printf("           ");
         
         printf("\n");
     }     
 }
+
 
 #endif
