@@ -3,6 +3,8 @@
 #include <string.h>
 #include <time.h>
 #include "Desing.h"
+#include "Dados.h"
+#include "InterfaceUsuario.h"
 #include <conio.h>
 
 #ifndef BACKEND_H
@@ -305,22 +307,21 @@ int ColocarMatrizDueto(int qtd_letras, char* palavra_sorteada1, char **matriz_le
     ImprimirMatrizDueto(matriz_letras1, matriz_letras2, qtd_letras, tentativas, matriz_cores1, matriz_cores2);
     Teclado(alfabeto, cores_alfabeto);
 
+    tentativas++;
+
     if(contador1 == qtd_letras){
         vit1 = 1;
         return 1;
-    }
-
-    if(contador2 == qtd_letras){
+    }else if(contador2 == qtd_letras){
         vit2 = 1;
         return 1;
+    }else{
+        return 0;
     }
 
-    tentativas++;
-
-    return 0;
 }
 
-void jogadaTermo(char *arquivo, char palavritas[50][10], int qtd_letras){
+int jogadaTermo(char *arquivo, char palavritas[50][10], int qtd_letras){
     srand(time(NULL));
 
     char* palavra_sorteada = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
@@ -346,11 +347,17 @@ void jogadaTermo(char *arquivo, char palavritas[50][10], int qtd_letras){
         vitoria = ColocarMatrizTermo(qtd_letras, palavra_sorteada, matriz_letras, matriz_cores, alfabeto, cores_alfabeto);
     }
 
+    if(vitoria>=1){
+        return 1;
+    }else{
+        return 0;
+    }
+
     free(matriz_cores);
     free(matriz_letras);
 }
 
-void jogadaDueto(char *arquivo, char palavritas[50][10], int qtd_letras){
+int jogadaDueto(char *arquivo, char palavritas[50][10], int qtd_letras){
     int soma = 0;
     srand(time(NULL));
 
@@ -361,24 +368,24 @@ void jogadaDueto(char *arquivo, char palavritas[50][10], int qtd_letras){
     printf("Palavra sorteada 2: %s\n", palavra_sorteada2);
 
     //   - MATRIZ 1
-    char **matriz_cores1 = (char **)malloc(5 * sizeof(char *));
-    for (int i = 0; i < 5; i++) {
+    char **matriz_cores1 = (char **)malloc(7 * sizeof(char *));
+    for (int i = 0; i < 7; i++) {
         matriz_cores1[i] = (char *)malloc(qtd_letras * sizeof(char));
     }
 
-    char **matriz_letras1 = (char **)malloc(5 * sizeof(char *));
-    for (int i = 0; i < 5; i++) {
+    char **matriz_letras1 = (char **)malloc(7 * sizeof(char *));
+    for (int i = 0; i < 7; i++) {
         matriz_letras1[i] = (char *)malloc(qtd_letras * sizeof(char));
     }
 
     //   - MATRIZ 2
-    char **matriz_cores2 = (char **)malloc(5 * sizeof(char *));
-    for (int i = 0; i < 5; i++) {
+    char **matriz_cores2 = (char **)malloc(7 * sizeof(char *));
+    for (int i = 0; i < 7; i++) {
         matriz_cores2[i] = (char *)malloc(qtd_letras * sizeof(char));
     }
 
-    char **matriz_letras2 = (char **)malloc(5 * sizeof(char *));
-    for (int i = 0; i < 5; i++) {
+    char **matriz_letras2 = (char **)malloc(7 * sizeof(char *));
+    for (int i = 0; i < 7; i++) {
         matriz_letras2[i] = (char *)malloc(qtd_letras * sizeof(char));
     }
 
@@ -387,10 +394,16 @@ void jogadaDueto(char *arquivo, char palavritas[50][10], int qtd_letras){
 
     subtituloDueto();
 
-    while (tentativas < 5 && vitoria != 2)
+    while (tentativas < 7 && vitoria != 2)
     {
         soma = ColocarMatrizDueto(qtd_letras, palavra_sorteada1, matriz_letras1, matriz_cores1, palavra_sorteada2, matriz_letras2, matriz_cores2, alfabeto, cores_alfabeto);
         vitoria += soma;
+    }
+
+    if(vitoria>=2){
+        return 1;
+    }else{
+        return 0;
     }
     
     free(matriz_cores1);
@@ -398,6 +411,20 @@ void jogadaDueto(char *arquivo, char palavritas[50][10], int qtd_letras){
     free(matriz_cores2);
     free(matriz_letras2);
 }
+
+void jogada(int choice, char *arquivo, char palavritas[50][10], int qtd_letras){
+    int v = 0;
+
+    if(choice == 1){
+        v = jogadaTermo(arquivo, palavritas, qtd_letras);
+    }else{
+        v = jogadaDueto(arquivo, palavritas, qtd_letras);
+    }
+
+    mandarTxt(new_user.nome, v);
+
+    VerUser();
+}
     
 
-#endif 
+#endif

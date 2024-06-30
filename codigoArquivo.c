@@ -17,10 +17,10 @@ int main() {
     switch (dificuldade)
     {
     case 1:
-        jogadaTermo(arquivo, palavritas, qtd_letras);
+        jogada(1, arquivo, palavritas, qtd_letras);
         break;
     case 2:
-        jogadaDueto(arquivo, palavritas, qtd_letras);
+        jogada(2, arquivo, palavritas, qtd_letras);
         break;
     default:
         break;
