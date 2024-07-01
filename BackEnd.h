@@ -63,60 +63,89 @@ char* InputResposta(int qtd_letras){
     printf("\n : ");
     scanf("%s", resposta);
 
-    system("clear");
+    system("cls");
     return resposta;
 }
 
 char *CompararPalavras(char *palavra_sorteada, char *resposta, int qtd_letras){
     char *resultado = (char *)malloc((qtd_letras + 1) * sizeof(char));
     int *letrasRepetidas = (int *)malloc((qtd_letras + 1) * sizeof(int));
-    
+    char *letrasVerificadas = (char *)malloc((qtd_letras + 1) * sizeof(char));
+    char *letrasVerificadasResposta = (char *)malloc((qtd_letras + 1) * sizeof(char));
+    int *letrasRepetidasResposta = (int *)malloc((qtd_letras + 1) * sizeof(int));
+    int indice = 0;
+    int indiceResposta = 0;
+
     for (int i = 0; i < qtd_letras; i++)
     {
         int quantidadeLetras = 0;
-        int nottem = 1;
 
-        for (int j = 0; j <= i+1; j++)
+        if (strchr(letrasVerificadas, palavra_sorteada[i]))
         {
-            if (strcmp(&resultado[i], &resultado[j]) == 0) {
-                nottem = 0;
+            printf("Ja esta ali\n");
+        }else{
+            for (int j = 0 ; j < qtd_letras; j++)
+            {
+                if (palavra_sorteada[i] == palavra_sorteada[j]){
+                    quantidadeLetras++;
+                    letrasVerificadas[indice] = palavra_sorteada[i];
+                    printf("J: %c\n", palavra_sorteada[j]);
+                    indice++;
+                }
             }
+            letrasRepetidas[i] = quantidadeLetras;
         }
-
-        int h = i;
-        while (nottem == 1)
-        {
-            if (h == qtd_letras){
-                nottem = 0;
-            }
-
-            if (strcmp(&resultado[i+1], &resultado[h]) == 0) {
-                quantidadeLetras++;
-            }
-            h++;
-        }
-        
-        letrasRepetidas[i] = quantidadeLetras;
     }
 
     for(int j = 0; j < qtd_letras ; j++){       
         printf("%d ", letrasRepetidas[j]);
     }
+    printf("\n\n");
+    
+    for (int i = 0; i < qtd_letras; i++)
+    {
+        int quantidadeLetras = 0;
+
+        if (strchr(letrasVerificadasResposta, resposta[i]))
+        {
+            printf("Ja esta ali\n");
+        }else{
+            for (int j = 0 ; j < qtd_letras; j++)
+            {
+                if (resposta[i] == resposta[j]){
+                    quantidadeLetras++;
+                    letrasVerificadasResposta[indiceResposta] = resposta[i];
+                    printf("J: %c\n", resposta[j]);
+                    indiceResposta++;
+                }
+            }
+        }
+        letrasRepetidasResposta[i] = quantidadeLetras;
+    }
+
+    for(int j = 0; j < qtd_letras ; j++){       
+        printf("%d ", letrasRepetidasResposta[j]);
+    }
+    printf("\n\n");
 
     char lugar_certo = '1';
     char nao_tem = '0';
     char lugar_errado = '2';
 
-    for(int i = 0; i < qtd_letras; i++){
-        if(palavra_sorteada[i] == resposta[i]){
+    for (int i = 0; i < qtd_letras; i++)
+    {
+        resultado[i] = lugar_errado;
+        
+        if (palavra_sorteada[i] == resposta[i]) {
             resultado[i] = lugar_certo;
+
         }
-        else if(strchr(palavra_sorteada, resposta[i])) {
-            resultado[i] = lugar_errado;
-        }
-        else{
+
+        if (strchr(palavra_sorteada, resposta[i]) == NULL) {
             resultado[i] = nao_tem;
         }
+
+
     }
 
     resultado[qtd_letras] = '\0';
