@@ -1,1 +1,2 @@
-mari 4 2 0
+helena 3 2 2
+mari 2 2 2

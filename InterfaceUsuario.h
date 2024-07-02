@@ -45,12 +45,12 @@ int GuardarDificuldade() {
     return num_dificuldade;
 }
 
-void VerUser(){
+void VerUser(Usuario user){
     printf("\n\nProgresso\n");
-    printf("Nome    -   %s\n", new_user.nome);
-    printf("Jogos   -   %d\n", new_user.jogos);
-    printf("Record  -   %d\n", new_user.record);
-    printf("Score   -   %d\n", new_user.score);
+    printf("Nome    -   %s\n", user.nome);
+    printf("Jogos   -   %d\n", user.jogos);
+    printf("Record  -   %d\n", user.record);
+    printf("Score   -   %d\n", user.score);
 }
 
 #endif 

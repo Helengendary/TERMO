@@ -112,6 +112,7 @@ char* InputResposta(int qtd_letras) {
         }
     }
 
+    system("cls");
     return resposta;
 }
 
@@ -369,7 +370,7 @@ int jogadaTermo(char *arquivo, char palavritas[1000][6], int qtd_letras){
     srand(time(NULL));
 
     char* palavra_sorteada = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
-    // printf("Palavra sorteada: %s\n", palavra_sorteada);
+    printf("\nPalavra: %s", palavra_sorteada);
 
     char **matriz_cores = (char **)malloc(5 * sizeof(char *));
     for (int i = 0; i < 5; i++) {
@@ -394,6 +395,7 @@ int jogadaTermo(char *arquivo, char palavritas[1000][6], int qtd_letras){
     if(vitoria>=1){
         return 1;
     }else{
+        printf("\nPalavra: %s", palavra_sorteada);
         return 0;
     }
 
@@ -407,9 +409,7 @@ int jogadaDueto(char *arquivo, char palavritas[1000][6], int qtd_letras){
 
     char* palavra_sorteada1 = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
     char* palavra_sorteada2 = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
-
-    printf("Palavra sorteada 1: %s\n", palavra_sorteada1);
-    printf("Palavra sorteada 2: %s\n", palavra_sorteada2);
+    printf("\nPalavras: %s, %s\n", palavra_sorteada1,palavra_sorteada2);
 
     //   - MATRIZ 1
     char **matriz_cores1 = (char **)malloc(7 * sizeof(char *));
@@ -447,6 +447,8 @@ int jogadaDueto(char *arquivo, char palavritas[1000][6], int qtd_letras){
     if(vitoria>=2){
         return 1;
     }else{
+
+        printf("\nPalavras: %s, %s\n", palavra_sorteada1,palavra_sorteada2);
         return 0;
     }
     
@@ -466,8 +468,6 @@ void jogada(int choice, char *arquivo, char palavritas[1000][6], int qtd_letras)
     }
 
     mandarTxt(new_user.nome, v);
-
-    VerUser();
 }
     
 

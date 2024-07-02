@@ -16,25 +16,31 @@ void mandarTxt(const char *nome, int ganhou){
         file = fopen("jogadores.txt", "w+");
     }
 
+    char usernome[20];
+    int userjogos, userrecord, userscore;
+
     // Ler cada linha do arquivo original e verificar se o jogador já existe
-    while (fscanf(file, "%19s %d %d %d", new_user.nome, &new_user.jogos, &new_user.record, &new_user.score) != EOF) {
-        if (strcmp(new_user.nome, nome) == 0) {
+    while (fscanf(file, "%19s %d %d %d", usernome, &userjogos, &userrecord, &userscore) != EOF) {
+        if (strcmp(usernome, nome) == 0) {
             encontrado = 1;
-            new_user.jogos++;
+            userjogos++;
             if (ganhou) {
-                new_user.score++;
-                if (new_user.score > new_user.record) {
-                    new_user.record = new_user.score;
+                userscore++;
+                if (userscore > userrecord) {
+                    userrecord = userscore;
                 }
             } else {
-                new_user.score = 0;
+                userscore = 0;
             }
+
+            new_user.jogos = userjogos;
+            new_user.record = userrecord;
+            new_user.score = userscore;
         }
-        fprintf(tempFile, "%s %d %d %d\n", new_user.nome, new_user.jogos, new_user.record, new_user.score);
+        fprintf(tempFile, "%s %d %d %d\n", usernome, userjogos, userrecord, userscore);
     }
 
     if (!encontrado) {
-        strcpy(new_user.nome, nome);
         new_user.jogos = 1;
         if (ganhou) {
             new_user.score = 1;
@@ -45,6 +51,8 @@ void mandarTxt(const char *nome, int ganhou){
         }
         fprintf(tempFile, "%s %d %d %d\n", new_user.nome, new_user.jogos, new_user.record, new_user.score);
     }
+
+    VerUser(new_user);
 
     fclose(file);
     fclose(tempFile);

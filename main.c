@@ -26,6 +26,4 @@ int main() {
     default:
         break;
     }
-    
-
 }
