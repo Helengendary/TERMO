@@ -67,10 +67,10 @@ char* InputResposta(int qtd_letras){
     return resposta;
 }
 
-int encontrarIndice(char *letrasVerificadas, int tamanho, char letra) {
+int encontrarIndice(char *array, int tamanho, char letra) {
     for (int i = 0; i < tamanho; i++) {
-        if (letrasVerificadas[i] == letra) {
-            return i; // Retorna o índice da letra encontrada
+        if (array[i] == letra) {
+            return i;
         }
     }
     return -1; // Retorna -1 se a letra não for encontrada
@@ -78,64 +78,7 @@ int encontrarIndice(char *letrasVerificadas, int tamanho, char letra) {
 
 char *CompararPalavras(char *palavra_sorteada, char *resposta, int qtd_letras){
     char *resultado = (char *)malloc((qtd_letras + 1) * sizeof(char));
-    int *letrasRepetidas = (int *)malloc((qtd_letras + 1) * sizeof(int));
-    char *letrasVerificadas = (char *)malloc((qtd_letras + 1) * sizeof(char));
-    char *letrasVerificadasResposta = (char *)malloc((qtd_letras + 1) * sizeof(char));
-    int *letrasRepetidasResposta = (int *)malloc((qtd_letras + 1) * sizeof(int));
-    int indice = 0;
-    int indiceResposta = 0;
-
-    for (int i = 0; i < qtd_letras; i++)
-    {
-        int quantidadeLetras = 0;
-
-        if (strchr(letrasVerificadas, palavra_sorteada[i]))
-        {
-            printf("Ja esta ali\n");
-        }else{
-            for (int j = 0 ; j < qtd_letras; j++)
-            {
-                if (palavra_sorteada[i] == palavra_sorteada[j]){
-                    quantidadeLetras++;
-                    letrasVerificadas[indice] = palavra_sorteada[i];
-                    printf("J: %c\n", palavra_sorteada[j]);
-                    indice++;
-                }
-            }
-            letrasRepetidas[i] = quantidadeLetras;
-        }
-    }
-
-    for(int j = 0; j < qtd_letras ; j++){       
-        printf("%d ", letrasRepetidas[j]);
-    }
-    printf("\n\n");
-    
-    for (int i = 0; i < qtd_letras; i++)
-    {
-        int quantidadeLetras = 0;
-
-        if (strchr(letrasVerificadasResposta, resposta[i]))
-        {
-            printf("Ja esta ali\n");
-        }else{
-            for (int j = 0 ; j < qtd_letras; j++)
-            {
-                if (resposta[i] == resposta[j]){
-                    quantidadeLetras++;
-                    letrasVerificadasResposta[indiceResposta] = resposta[i];
-                    printf("J: %c\n", resposta[j]);
-                    indiceResposta++;
-                }
-            }
-        }
-        letrasRepetidasResposta[i] = quantidadeLetras;
-    }
-
-    for(int j = 0; j < qtd_letras ; j++){       
-        printf("%d ", letrasRepetidasResposta[j]);
-    }
-    printf("\n\n");
+    strcpy(resultado,palavra_sorteada);
 
     char lugar_certo = '1';
     char nao_tem = '0';
@@ -156,28 +99,6 @@ char *CompararPalavras(char *palavra_sorteada, char *resposta, int qtd_letras){
 
 
     }
-
-    for (int i = 0; i < qtd_letras; i++) {     
-        printf("!\n");   
-        int indicees = 0, indiceees = 0;        
-        if (resultado[i] == lugar_certo) {
-            printf("%c", palavra_sorteada[i]);
-            indicees = encontrarIndice(letrasVerificadas, qtd_letras, palavra_sorteada[i]);
-            indiceees = encontrarIndice(letrasVerificadasResposta, qtd_letras, palavra_sorteada[i]);
-        }
-
-        if (letrasRepetidas[indicees] <= letrasRepetidasResposta[indiceees]){
-            for (int g = 0; g < qtd_letras; g++) {
-                printf("%c", resposta[g]);
-                if (resposta[g] == palavra_sorteada[i]) {
-                    if (resultado[g] == lugar_errado) {
-                        resultado[g] = nao_tem;
-                    }
-                }
-            }
-        }
-    }
-
 
     resultado[qtd_letras] = '\0';
 
