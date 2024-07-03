@@ -67,6 +67,15 @@ char* InputResposta(int qtd_letras){
     return resposta;
 }
 
+int encontrarIndice(char *letrasVerificadas, int tamanho, char letra) {
+    for (int i = 0; i < tamanho; i++) {
+        if (letrasVerificadas[i] == letra) {
+            return i; // Retorna o índice da letra encontrada
+        }
+    }
+    return -1; // Retorna -1 se a letra não for encontrada
+}
+
 char *CompararPalavras(char *palavra_sorteada, char *resposta, int qtd_letras){
     char *resultado = (char *)malloc((qtd_letras + 1) * sizeof(char));
     int *letrasRepetidas = (int *)malloc((qtd_letras + 1) * sizeof(int));
@@ -147,6 +156,28 @@ char *CompararPalavras(char *palavra_sorteada, char *resposta, int qtd_letras){
 
 
     }
+
+    for (int i = 0; i < qtd_letras; i++) {     
+        printf("!\n");   
+        int indicees = 0, indiceees = 0;        
+        if (resultado[i] == lugar_certo) {
+            printf("%c", palavra_sorteada[i]);
+            indicees = encontrarIndice(letrasVerificadas, qtd_letras, palavra_sorteada[i]);
+            indiceees = encontrarIndice(letrasVerificadasResposta, qtd_letras, palavra_sorteada[i]);
+        }
+
+        if (letrasRepetidas[indicees] <= letrasRepetidasResposta[indiceees]){
+            for (int g = 0; g < qtd_letras; g++) {
+                printf("%c", resposta[g]);
+                if (resposta[g] == palavra_sorteada[i]) {
+                    if (resultado[g] == lugar_errado) {
+                        resultado[g] = nao_tem;
+                    }
+                }
+            }
+        }
+    }
+
 
     resultado[qtd_letras] = '\0';
 
