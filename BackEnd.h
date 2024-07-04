@@ -118,26 +118,50 @@ char* InputResposta(int qtd_letras) {
 
 char *CompararPalavras(char *palavra_sorteada, char *resposta, int qtd_letras){
     char *resultado = (char *)malloc((qtd_letras + 1) * sizeof(char));
+    strcpy(resultado,palavra_sorteada);
+
     char lugar_certo = '1';
     char nao_tem = '0';
     char lugar_errado = '2';
 
-    for(int i = 0; i < qtd_letras; i++){
-        if(palavra_sorteada[i] == resposta[i]){
+    char * copy = malloc(sizeof(qtd_letras+1));
+    strcpy(copy,palavra_sorteada);
+
+    for (int i =0; i<qtd_letras; i++) {
+        resultado[i] = nao_tem;
+    }
+
+    for(int i=0; i<qtd_letras; i++)
+        if(copy[i] == resposta[i])
+        {
+            copy[i] = '0';
             resultado[i] = lugar_certo;
         }
-        else if(strchr(palavra_sorteada, resposta[i])) {
-            resultado[i] = lugar_errado;
-        }
-        else{
-            resultado[i] = nao_tem;
-        }
+    
+    for(int i=0; i<qtd_letras; i++){
+        for(int j=0; j<qtd_letras; j++)
+        {
+            if (copy[i] == '0') {
+                continue;
+            }
+            if(copy[i] == resposta[j])
+            {
+                if (copy[j] != '0'){
+                    copy[i] = '1';
+                    resultado[j] = lugar_errado;
+                }
+            } 
+        } 
     }
 
     resultado[qtd_letras] = '\0';
 
     return resultado; 
+    
+    free(copy);
+    free(resultado);
 }
+
 
 
 int cont2 = 0;
@@ -370,7 +394,6 @@ int jogadaTermo(char *arquivo, char palavritas[1000][6], int qtd_letras){
     srand(time(NULL));
 
     char* palavra_sorteada = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
-    printf("\nPalavra: %s", palavra_sorteada);
 
     char **matriz_cores = (char **)malloc(5 * sizeof(char *));
     for (int i = 0; i < 5; i++) {
@@ -409,7 +432,6 @@ int jogadaDueto(char *arquivo, char palavritas[1000][6], int qtd_letras){
 
     char* palavra_sorteada1 = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
     char* palavra_sorteada2 = SortearPalavra(LerArquivo(arquivo, palavritas), palavritas);
-    printf("\nPalavras: %s, %s\n", palavra_sorteada1,palavra_sorteada2);
 
     //   - MATRIZ 1
     char **matriz_cores1 = (char **)malloc(7 * sizeof(char *));
