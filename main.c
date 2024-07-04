@@ -6,6 +6,7 @@
 #include "Desing.h"
 
 int main() {
+
     tituloTermo();
     char palavritas[1000][6];
     int dificuldade = GuardarDificuldade();
@@ -26,4 +27,6 @@ int main() {
     default:
         break;
     }
+
+    ordRecord();
 }

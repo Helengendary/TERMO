@@ -95,7 +95,7 @@ char* InputResposta(int qtd_letras) {
     char* resposta = (char*)malloc((qtd_letras + 1) * sizeof(char)); // +1 para o caractere nulo
 
     if (resposta == NULL) {
-        printf("Erro ao alocar memória\n");
+        printf("Erro ao alocar memoria\n");
         exit(1);
     }
 
@@ -104,9 +104,9 @@ char* InputResposta(int qtd_letras) {
         scanf("%s", resposta);
 
         if (!palavraValida(resposta)) {
-            printf("Entrada inválida. Certifique-se de que a palavra tem %d letras e contém apenas letras.\n", qtd_letras);
+            printf("Entrada invalida. Certifique-se de que a palavra tem %d letras e contem apenas letras.\n", qtd_letras);
         } else if (!palavraExiste(resposta)) {
-            printf("Palavra não encontrada na lista de palavras possíveis.\n");
+            printf("Palavra nao encontrada na lista de palavras possiveis.\n");
         } else {
             break;
         }

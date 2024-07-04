@@ -1,5 +1,5 @@
-helena 24 2 2
 mari 4 7 0
+helena 24 2 2
 juju 2 2 2
 1 2 1 0
 termo 2 0 0
