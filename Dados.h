@@ -68,10 +68,12 @@ void mandarTxt(const char *nome, int ganhou){
 
 }
 
+// ordernar jogadores apartir do recorde para o txt recordes
 void ordRecord() {
     FILE *file = fopen("jogadores.txt", "r");
     FILE *recordes = fopen("recordes.txt", "w");
 
+    // para guardar todos os jogadores do txt
     int indicer = 10;
     Usuario *informations = malloc(indicer*sizeof(Usuario));
 
@@ -80,6 +82,7 @@ void ordRecord() {
     while (fscanf(file, "%19s %d %d %d", informations[aux].nome, &informations[aux].jogos, &informations[aux].record, &informations[aux].score) != EOF ){
 
         aux++;
+        // array dinâmico
         if (aux == indicer) {
             indicer*=2;
             informations = realloc(informations,indicer*sizeof(Usuario));
@@ -87,6 +90,7 @@ void ordRecord() {
     }
     Usuario auxilio;
 
+    // bubble sort para ordenar e printar
     int minor_index;
     for(int i =0;i<aux-1;i++)
     {

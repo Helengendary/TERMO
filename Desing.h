@@ -26,7 +26,7 @@ const char* getColor(char color) {
     }
 }
 
-
+// Título colorido
 void tituloTermo() { 
     printf(VERMELHO"	______________________\n");
     printf(VERMELHO"      /\\                      \\\n");
@@ -43,6 +43,7 @@ void tituloTermo() {
 
 }
 
+// Títulos simples
 void subtituloTermo(){
 
     printf(" _______  ____  _____  __  __   ___\n");
@@ -65,6 +66,7 @@ void subtituloDueto(){
 
 }
 
+// Printa o alfabeto a suas cores
 void Teclado(char *alfabeto, char *cores_alfabeto){
 
     printf("\n");
@@ -77,12 +79,15 @@ void Teclado(char *alfabeto, char *cores_alfabeto){
             printf("\n");
             printf("      ");
         }
+
+        // get color para pegar a cor da constante
         printf("%s%c%s   ",getColor(cores_alfabeto[i]), alfabeto[i], RESET);
     }
     printf("\n");
     
 }
 
+// imprimir todo o termo de acordo com as cores
 void ImprimirMatrizTermo(char **matriz, int qtd_letras, int tentativa, char **matriz_cores) { 
 
     for (int row = 0; row < tentativa+1; row++)
@@ -90,6 +95,7 @@ void ImprimirMatrizTermo(char **matriz, int qtd_letras, int tentativa, char **ma
         printf("\n");
         for (int col = 0; col < qtd_letras; col++)
         {
+            // get color para pegar a cor da constante
             printf("%s%s ___      %s", NEGRITO, getColor(matriz_cores[row][col]), RESET);
         }  
         printf("\n");
@@ -111,6 +117,7 @@ void ImprimirMatrizTermo(char **matriz, int qtd_letras, int tentativa, char **ma
     }     
 }
 
+// imprimir todo o dueto de acordo com as cores
 void ImprimirMatrizDueto(char **matriz1,char **matriz2, int qtd_letras, int tentativa, char **matriz_cores1, char **matriz_cores2)
 { 
 
