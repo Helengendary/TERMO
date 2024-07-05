@@ -118,25 +118,48 @@ char* InputResposta(int qtd_letras) {
 
 char *CompararPalavras(char *palavra_sorteada, char *resposta, int qtd_letras){
     char *resultado = (char *)malloc((qtd_letras + 1) * sizeof(char));
+    strcpy(resultado,palavra_sorteada);
+
     char lugar_certo = '1';
     char nao_tem = '0';
     char lugar_errado = '2';
 
-    for(int i = 0; i < qtd_letras; i++){
-        if(palavra_sorteada[i] == resposta[i]){
+    char * copy = malloc(sizeof(qtd_letras+1));
+    strcpy(copy,palavra_sorteada);
+
+    for (int i =0; i<qtd_letras; i++) {
+        resultado[i] = nao_tem;
+    }
+
+    for(int i=0; i<qtd_letras; i++)
+        if(copy[i] == resposta[i])
+        {
+            copy[i] = '0';
             resultado[i] = lugar_certo;
         }
-        else if(strchr(palavra_sorteada, resposta[i])) {
-            resultado[i] = lugar_errado;
-        }
-        else{
-            resultado[i] = nao_tem;
-        }
+    
+    for(int i=0; i<qtd_letras; i++){
+        for(int j=0; j<qtd_letras; j++)
+        {
+            if (copy[i] == '0') {
+                continue;
+            }
+            if(copy[i] == resposta[j])
+            {
+                if (copy[j] != '0'){
+                    copy[i] = '1';
+                    resultado[j] = lugar_errado;
+                }
+            } 
+        } 
     }
 
     resultado[qtd_letras] = '\0';
 
     return resultado; 
+    
+    free(copy);
+    free(resultado);
 }
 
 
@@ -245,11 +268,11 @@ char *PreencherCoresAlfabeto(char *cores_alfabeto,char *alfabeto, char *result, 
 
         for(int j = 0; j <= 26; j++){
             if(result[i] == '1'){
-                if((caractere == alfabeto[j]) && (cores_alfabeto[j] == 'x')){
+                if((caractere == alfabeto[j]) && ((cores_alfabeto[j] == 'x') || (cores_alfabeto[j] == 'y'))){
                     cores_alfabeto[j] = 'g';
                 }
             }else if(result[i] == '2'){
-                if((caractere == alfabeto[j]) && (cores_alfabeto[j] == 'x')){
+                if((caractere == alfabeto[j]) && ((cores_alfabeto[j] == 'x') || (cores_alfabeto[j] == 'w'))){
                     cores_alfabeto[j] = 'y';
                 }
             }else if(result[i] == '0'){
@@ -272,11 +295,11 @@ char *PreencherCoresAlfabetoDueto(char *cores_alfabeto,char *alfabeto, char *res
 
         for(int j = 0; j <= 26; j++){
             if((result1[i] == '1') || (result2[i] == '1')){
-                if((caractere == alfabeto[j]) && (cores_alfabeto[j] == 'x')){
+                if((caractere == alfabeto[j]) && ((cores_alfabeto[j] == 'x') || (cores_alfabeto[j] == 'y'))){
                     cores_alfabeto[j] = 'g';
                 }
             }else if((result1[i] == '2') || (result2[i] == '2')){
-                if((caractere == alfabeto[j]) && (cores_alfabeto[j] == 'x')){
+                if((caractere == alfabeto[j]) && ((cores_alfabeto[j] == 'x') || (cores_alfabeto[j] == 'w'))){
                     cores_alfabeto[j] = 'y';
                 }
             }else if((result1[i] == '0') || (result2[i] == '0')){

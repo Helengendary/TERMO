@@ -18,6 +18,9 @@ Usuario new_user;
 void PedirNome(){
     printf("Digite seu nome: ");
     scanf("%s", new_user.nome);
+    for(int i = 0; new_user.nome[i]; i++){
+        new_user.nome[i] = tolower(new_user.nome[i]);
+    }
 }
 
 int GuardarDificuldade() {
@@ -50,7 +53,7 @@ void VerUser(Usuario user){
     printf("Nome    -   %s\n", user.nome);
     printf("Jogos   -   %d\n", user.jogos);
     printf("Record  -   %d\n", user.record);
-    printf("Score   -   %d\n", user.score);
+    printf("Score   -   %d\n\n", user.score);   
 }
 
 #endif 

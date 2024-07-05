@@ -26,4 +26,6 @@ int main() {
     default:
         break;
     }
+
+    ordRecord();
 }
