@@ -4,6 +4,7 @@
 #ifndef InterfaceUsuario_h
 #define InterfaceUsuario_h
 
+// struct que guarda as informações de quem está jogando
 typedef struct Usuario
 {
     char nome[20];
@@ -15,14 +16,17 @@ typedef struct Usuario
 
 Usuario new_user;
 
+// Pede nome do usuário
 void PedirNome(){
     printf("Digite seu nome: ");
     scanf("%s", new_user.nome);
+    // Deixa em letra minuscúla
     for(int i = 0; new_user.nome[i]; i++){
         new_user.nome[i] = tolower(new_user.nome[i]);
     }
 }
 
+// Pergunta de o usuário que dueto ou termo
 int GuardarDificuldade() {
     int num_dificuldade = 0;
     char buffer[100];
@@ -45,9 +49,11 @@ int GuardarDificuldade() {
         }
     }
 
+    // retorna a opção do usuário
     return num_dificuldade;
 }
 
+// Imprime no final as informações do jogador
 void VerUser(Usuario user){
     printf("\n\nProgresso\n");
     printf("Nome    -   %s\n", user.nome);

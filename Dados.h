@@ -21,6 +21,9 @@ void mandarTxt(const char *nome, int ganhou){
 
     // Ler cada linha do arquivo original e verificar se o jogador já existe
     while (fscanf(file, "%19s %d %d %d", usernome, &userjogos, &userrecord, &userscore) != EOF) {
+        // Se o nome da linha que esta verificando for igual ao nome passado no parametro, "encontrado" se torna verdadeiro, a quantidade de jogos desse user encontrado
+        // aumenta, e se ele ganhou, o score aumenta um ponto. Se o score agora for maior que o recorde atual, se torna o novo recorde. E se o usuario não ganhou,
+        // apenas volta o score para 0.
         if (strcmp(usernome, nome) == 0) {
             encontrado = 1;
             userjogos++;
@@ -37,9 +40,11 @@ void mandarTxt(const char *nome, int ganhou){
             new_user.record = userrecord;
             new_user.score = userscore;
         }
+        // Insere as informações atualizadas em um arquivo TXT temporario
         fprintf(tempFile, "%s %d %d %d\n", usernome, userjogos, userrecord, userscore);
     }
 
+    // Caso o nome de usuario não seja encontrado, insere um novo usuário em "jogadores.txt"
     if (!encontrado) {
         new_user.jogos = 1;
         if (ganhou) {
@@ -63,10 +68,12 @@ void mandarTxt(const char *nome, int ganhou){
 
 }
 
+// ordernar jogadores apartir do recorde para o txt recordes
 void ordRecord() {
     FILE *file = fopen("jogadores.txt", "r");
     FILE *recordes = fopen("recordes.txt", "w");
 
+    // para guardar todos os jogadores do txt
     int indicer = 10;
     Usuario *informations = malloc(indicer*sizeof(Usuario));
 
@@ -75,6 +82,7 @@ void ordRecord() {
     while (fscanf(file, "%19s %d %d %d", informations[aux].nome, &informations[aux].jogos, &informations[aux].record, &informations[aux].score) != EOF ){
 
         aux++;
+        // array dinâmico
         if (aux == indicer) {
             indicer*=2;
             informations = realloc(informations,indicer*sizeof(Usuario));
@@ -82,6 +90,7 @@ void ordRecord() {
     }
     Usuario auxilio;
 
+    // bubble sort para ordenar e printar
     int minor_index;
     for(int i =0;i<aux-1;i++)
     {
@@ -102,8 +111,8 @@ void ordRecord() {
         fprintf(recordes, "%s %d %d %d\n", informations[i].nome, informations[i].jogos, informations[i].record, informations[i].score);
     }
 
-    close(file);
-    close(recordes);
+    fclose(file);
+    fclose(recordes);
 }
 
 #endif

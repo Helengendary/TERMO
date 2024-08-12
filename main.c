@@ -14,7 +14,7 @@ int main() {
     char arquivo[20];
     PedirNome();
 
-    strcpy(arquivo, "palavras/facil.txt");
+    strcpy(arquivo, "palavras.txt");
 
     switch (dificuldade)
     {
